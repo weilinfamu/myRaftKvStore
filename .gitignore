@@ -1,0 +1,35 @@
+
+# CMake/构建相关
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.ninja
+
+# 编译产物
+bin/
+lib/
+*.o
+*.so
+*.a
+*.out
+
+
+# 编辑器与临时文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-*
+.DS_Store
+Thumbs.db
+
+
+# 备份文件
+backup-*.tgz
+# 例外：需要跟踪的配置文件
+!bin/test.conf
+!bin/test.conf.3nodes
+!bin/test.conf.clean

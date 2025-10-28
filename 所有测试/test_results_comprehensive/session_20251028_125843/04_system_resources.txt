@@ -1,0 +1,34 @@
+=== 系统资源基准 ===
+时间: Tue Oct 28 12:58:43 PM AEDT 2025
+
+=== CPU 信息 ===
+CPU(s):                                  10
+On-line CPU(s) list:                     0-9
+Thread(s) per core:                      1
+Core(s) per cluster:                     10
+Socket(s):                               -
+NUMA node0 CPU(s):                       0-9
+
+=== 内存信息 ===
+               total        used        free      shared  buff/cache   available
+Mem:            24Gi       2.3Gi        18Gi        13Mi       4.6Gi        22Gi
+Swap:          3.8Gi          0B       3.8Gi
+
+=== 磁盘I/O统计（当前） ===
+iostat 未安装
+
+=== 网络连接统计 ===
+Total: 384
+TCP:   44 (estab 14, closed 3, orphaned 0, timewait 2)
+
+Transport Total     IP        IPv6
+RAW	  1         0         1        
+UDP	  17        10        7        
+TCP	  41        25        16       
+INET	  59        35        24       
+FRAG	  0         0         0        
+
+
+=== 系统负载 ===
+ 12:58:43 up 41 min,  1 user,  load average: 1.49, 1.62, 1.40
+

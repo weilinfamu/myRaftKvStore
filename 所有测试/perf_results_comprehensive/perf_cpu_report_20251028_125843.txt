@@ -1,0 +1,422 @@
+Warning:
+Kernel address maps (/proc/{kallsyms,modules}) were restricted.
+
+Check /proc/sys/kernel/kptr_restrict before running 'perf record'.
+
+As no suitable kallsyms nor vmlinux was found, kernel samples
+can't be resolved.
+
+Samples in kernel modules can't be resolved as well.
+
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 9  of event 'cpu-clock:pppH'
+# Event count (approx.): 90909090
+#
+# Children      Self  Command          Shared Object        Symbol                                                                                                                                                                                                                 
+# ........  ........  ...............  ...................  .......................................................................................................................................................................................................................
+#
+   100.00%     0.00%  simple_stress_t  libc.so.6            [.] thread_start
+            |
+            ---thread_start
+               start_thread
+               0xffff94c829cc
+               std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+   100.00%     0.00%  simple_stress_t  libc.so.6            [.] start_thread
+            |
+            ---start_thread
+               0xffff94c829cc
+               std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+   100.00%     0.00%  simple_stress_t  libstdc++.so.6.0.30  [.] 0x0000ffff94c829cc
+            |
+            ---0xffff94c829cc
+               std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+   100.00%     0.00%  simple_stress_t  simple_stress_test   [.] std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+            |
+            ---std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+   100.00%     0.00%  simple_stress_t  simple_stress_test   [.] std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+            |
+            ---std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+   100.00%     0.00%  simple_stress_t  simple_stress_test   [.] std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+            |
+            ---std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+   100.00%    11.11%  simple_stress_t  simple_stress_test   [.] SimpleStressTester::WorkerThread
+            |          
+            |--88.89%--SimpleStressTester::WorkerThread
+            |          |          
+            |          |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+            |          |          |          
+            |          |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+            |          |          |          |          
+            |          |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+            |          |          |          
+            |          |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+            |          |          |          
+            |          |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+            |          |          
+            |           --22.22%--std::vector<int, std::allocator<int> >::vector
+            |                     std::vector<int, std::allocator<int> >::_M_default_initialize
+            |                     std::__uninitialized_default_n_a<int*, unsigned long, int>
+            |                     std::__uninitialized_default_n<int*, unsigned long>
+            |                     std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+            |                     std::__fill_n_a<int*, unsigned long, int>
+            |          
+             --11.11%--thread_start
+                       start_thread
+                       0xffff94c829cc
+                       std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+                       std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+                       std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+                       std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+                       std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+                       SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+                       SimpleStressTester::WorkerThread
+
+   100.00%     0.00%  simple_stress_t  simple_stress_test   [.] std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+            |
+            ---std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+   100.00%     0.00%  simple_stress_t  simple_stress_test   [.] std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+            |
+            ---std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+   100.00%     0.00%  simple_stress_t  simple_stress_test   [.] SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+            |
+            ---SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               |          
+               |--66.67%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |          |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          |          
+               |          |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          |          
+               |          |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          |          
+               |           --11.11%--std::uniform_int_distribution<int>::param_type::b
+               |          
+                --22.22%--std::vector<int, std::allocator<int> >::vector
+                          std::vector<int, std::allocator<int> >::_M_default_initialize
+                          std::__uninitialized_default_n_a<int*, unsigned long, int>
+                          std::__uninitialized_default_n<int*, unsigned long>
+                          std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+                          std::__fill_n_a<int*, unsigned long, int>
+
+    66.67%     0.00%  simple_stress_t  simple_stress_test   [.] std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+            |
+            ---std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          
+               |--44.44%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               |          |          
+               |           --33.33%--std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+               |          
+               |--11.11%--std::uniform_int_distribution<int>::param_type::a
+               |          
+                --11.11%--std::uniform_int_distribution<int>::param_type::b
+
+    44.44%    11.11%  simple_stress_t  simple_stress_test   [.] std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+            |          
+            |--33.33%--std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+            |          std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+            |          
+             --11.11%--thread_start
+                       start_thread
+                       0xffff94c829cc
+                       std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+                       std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+                       std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+                       std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+                       std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+                       SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+                       SimpleStressTester::WorkerThread
+                       std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+                       std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+
+    33.33%    33.33%  simple_stress_t  simple_stress_test   [.] std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+            |
+            ---thread_start
+               start_thread
+               0xffff94c829cc
+               std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand
+
+    22.22%    22.22%  simple_stress_t  simple_stress_test   [.] std::__fill_n_a<int*, unsigned long, int>
+            |
+            ---thread_start
+               start_thread
+               0xffff94c829cc
+               std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               std::vector<int, std::allocator<int> >::vector
+               std::vector<int, std::allocator<int> >::_M_default_initialize
+               std::__uninitialized_default_n_a<int*, unsigned long, int>
+               std::__uninitialized_default_n<int*, unsigned long>
+               std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+               std::__fill_n_a<int*, unsigned long, int>
+
+    22.22%     0.00%  simple_stress_t  simple_stress_test   [.] std::vector<int, std::allocator<int> >::vector
+            |
+            ---std::vector<int, std::allocator<int> >::vector
+               std::vector<int, std::allocator<int> >::_M_default_initialize
+               std::__uninitialized_default_n_a<int*, unsigned long, int>
+               std::__uninitialized_default_n<int*, unsigned long>
+               std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+               std::__fill_n_a<int*, unsigned long, int>
+
+    22.22%     0.00%  simple_stress_t  simple_stress_test   [.] std::vector<int, std::allocator<int> >::_M_default_initialize
+            |
+            ---std::vector<int, std::allocator<int> >::_M_default_initialize
+               std::__uninitialized_default_n_a<int*, unsigned long, int>
+               std::__uninitialized_default_n<int*, unsigned long>
+               std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+               std::__fill_n_a<int*, unsigned long, int>
+
+    22.22%     0.00%  simple_stress_t  simple_stress_test   [.] std::__uninitialized_default_n_a<int*, unsigned long, int>
+            |
+            ---std::__uninitialized_default_n_a<int*, unsigned long, int>
+               std::__uninitialized_default_n<int*, unsigned long>
+               std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+               std::__fill_n_a<int*, unsigned long, int>
+
+    22.22%     0.00%  simple_stress_t  simple_stress_test   [.] std::__uninitialized_default_n<int*, unsigned long>
+            |
+            ---std::__uninitialized_default_n<int*, unsigned long>
+               std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+               std::__fill_n_a<int*, unsigned long, int>
+
+    22.22%     0.00%  simple_stress_t  simple_stress_test   [.] std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+            |
+            ---std::__uninitialized_default_n_1<true>::__uninit_default_n<int*, unsigned long>
+               std::__fill_n_a<int*, unsigned long, int>
+
+    11.11%    11.11%  simple_stress_t  simple_stress_test   [.] std::uniform_int_distribution<int>::param_type::a
+            |
+            ---thread_start
+               start_thread
+               0xffff94c829cc
+               std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               std::uniform_int_distribution<int>::param_type::a
+
+    11.11%    11.11%  simple_stress_t  simple_stress_test   [.] std::uniform_int_distribution<int>::param_type::b
+            |
+            ---thread_start
+               start_thread
+               0xffff94c829cc
+               std::thread::_State_impl<std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> > >::_M_run
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::operator()
+               std::thread::_Invoker<std::tuple<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}> >::_M_invoke<0ul>
+               std::__invoke<SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               std::__invoke_impl<void, SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}>
+               SimpleStressTester::RunCPUIntensiveTest()::{lambda()#1}::operator()
+               SimpleStressTester::WorkerThread
+               std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >
+               std::uniform_int_distribution<int>::param_type::b
+
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

@@ -1,0 +1,16 @@
+[TASK] tid = 299057,test_fiber_sleep begin
+[scheduler] current thread as called thread
+[fiber] create fiber , id = 0
+[scheduler] init caller thread's main fiber success
+[scheduler] init caller thread's caller fiber success
+-------scheduler init success-------
+[scheduler] scheduler start
+[TASK] tid = 299057,test_fiber_sleep finish
+[scheduler] stop
+[scheduler] begin run
+task2 sleep for 2s
+task2 sleep for 2s
+task 1 sleep for 6s
+task2 sleep for 2s
+task2 sleep for 2s
+=== 输出预览 ===

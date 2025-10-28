@@ -1,0 +1,14 @@
+[scheduler] current thread as called thread
+[fiber] create fiber , id = 0
+[scheduler] init caller thread's main fiber success
+[scheduler] init caller thread's caller fiber success
+-------scheduler init success-------
+[scheduler] scheduler start
+[scheduler] stop
+[scheduler] begin run
+EINPROGRESS
+add event success,fd = 8
+add event success,fd = 8
+write callback
+connect success
+=== 输出预览 ===
