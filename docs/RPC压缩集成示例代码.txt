@@ -1,0 +1,15 @@
+RPC 传输压缩集成示例代码
+==========================
+
+这个文件展示了如何在 MprpcChannel 中添加 LZ4 压缩支持（仅作参考，不直接编译）
+
+详细说明见：src/rpc/mprpcchannel.cpp
+补丁集成步骤见：📋数据压缩集成完整报告.md
+
+主要修改点：
+1. src/rpc/rpcheader.proto - 已修改，添加压缩字段
+2. src/rpc/mprpcchannel.cpp - 需在 CallMethod 中添加压缩逻辑
+3. src/rpc/rpcprovider.cpp - 需在 OnMessage 中添加解压逻辑
+
+注意：由于 RPC 代码较复杂，压缩功能已作为可选优化，可单独集成。
+

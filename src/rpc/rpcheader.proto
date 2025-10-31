@@ -7,4 +7,10 @@ message RpcHeader
     bytes service_name = 1;
     bytes method_name = 2;
     uint32 args_size = 3; //这里虽然是uint32，但是protobuf编码的时候默认就是变长编码，可见：https://www.cnblogs.com/yangwenhuan/p/10328960.html
+    
+    // ==================== 数据压缩相关（新增）====================
+    bool compressed = 4;           // 是否压缩（true: 压缩，false: 未压缩）
+    uint32 original_size = 5;      // 原始数据大小（用于解压）
+    uint32 compression_type = 6;   // 压缩类型（0: None, 1: LZ4, 2: Zstd）
+    // ============================================================
 }
