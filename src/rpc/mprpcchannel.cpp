@@ -93,6 +93,15 @@ bool MprpcChannel::newConnect(const char* ip, uint16_t port, string* errMsg) {
   timeout.tv_sec = 5;   // 5秒超时
   timeout.tv_usec = 0;
   
+  /*
+  超时机制的本质：
+SO_RCVTIMEO：接收超时 - 限制recv()/read()等接收数据函数的阻塞时间
+SO_SNDTIMEO：发送超时 - 限制send()/write()等发送数据函数的阻塞时间
+
+   - 当socket操作启动时，协程库注册一个5秒后触发的定时器
+   - 如果操作在5秒内完成，取消定时器，协程继续执行
+   - 如果超时，定时器触发，强制当前协程切换出去，并标记操作超时
+  */
   if (-1 == setsockopt(clientfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout))) {
     char errtxt[512] = {0};
     sprintf(errtxt, "setsockopt SO_RCVTIMEO error! errno:%d", errno);
@@ -115,6 +124,9 @@ bool MprpcChannel::newConnect(const char* ip, uint16_t port, string* errMsg) {
   return true;
 }
 
+/*
+状态管理模型设计
+*/
 // ==================== 状态管理 ====================
 
 void MprpcChannel::HandleSuccess() {

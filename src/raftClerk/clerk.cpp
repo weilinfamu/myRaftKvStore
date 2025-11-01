@@ -12,26 +12,32 @@
 std::string Clerk::Get(std::string key) {
   m_requestId++;
   auto requestId = m_requestId;
-  int server = m_recentLeaderId;
+  
   raftKVRpcProctoc::GetArgs args;
   args.set_key(key);
   args.set_clientid(m_clientId);
   args.set_requestid(requestId);
 
   while (true) {
+    // ==================== 新架构：使用负载均衡器选择服务器 ====================
+    int server = m_loadBalancer->SelectServer();
+    
     raftKVRpcProctoc::GetReply reply;
-    bool ok = m_servers[server]->Get(&args, &reply);
-    if (!ok ||
-        reply.err() ==
-            ErrWrongLeader) {  //会一直重试，因为requestId没有改变，因此可能会因为RPC的丢失或者其他情况导致重试，kvserver层来保证不重复执行（线性一致性）
-      server = (server + 1) % m_servers.size();
+    bool ok = m_rpcClients[server]->Get(args, &reply);
+    
+    if (!ok || reply.err() == ErrWrongLeader) {
+      // 标记失败，负载均衡器会选择下一个
+      m_loadBalancer->MarkFailure(server);
       continue;
     }
+    
     if (reply.err() == ErrNoKey) {
+      m_loadBalancer->MarkSuccess(server);
       return "";
     }
+    
     if (reply.err() == OK) {
-      m_recentLeaderId = server;
+      m_loadBalancer->MarkSuccess(server);
       return reply.value();
     }
   }
@@ -39,33 +45,37 @@ std::string Clerk::Get(std::string key) {
 }
 
 void Clerk::PutAppend(std::string key, std::string value, std::string op) {
-  // You will have to modify this function.
   m_requestId++;
   auto requestId = m_requestId;
-  auto server = m_recentLeaderId;
+  
   while (true) {
+    // ==================== 新架构：使用负载均衡器选择服务器 ====================
+    int server = m_loadBalancer->SelectServer();
+    
     raftKVRpcProctoc::PutAppendArgs args;
     args.set_key(key);
     args.set_value(value);
     args.set_op(op);
     args.set_clientid(m_clientId);
     args.set_requestid(requestId);
+    
     raftKVRpcProctoc::PutAppendReply reply;
-    bool ok = m_servers[server]->PutAppend(&args, &reply);
+    bool ok = m_rpcClients[server]->PutAppend(args, &reply);
+    
     if (!ok || reply.err() == ErrWrongLeader) {
-      DPrintf("【Clerk::PutAppend】原以为的leader：{%d}请求失败，向新leader{%d}重试  ，操作：{%s}", server, server + 1,
-              op.c_str());
+      DPrintf("【Clerk::PutAppend】原以为的leader：{%d}请求失败，向新leader重试，操作：{%s}", server, op.c_str());
       if (!ok) {
-        DPrintf("重试原因 ，rpc失敗 ，");
+        DPrintf("重试原因：rpc失败");
       }
       if (reply.err() == ErrWrongLeader) {
-        DPrintf("重試原因：非leader");
+        DPrintf("重试原因：非leader");
       }
-      server = (server + 1) % m_servers.size();  // try the next server
+      m_loadBalancer->MarkFailure(server);
       continue;
     }
-    if (reply.err() == OK) {  //什么时候reply errno为ok呢？？？
-      m_recentLeaderId = server;
+    
+    if (reply.err() == OK) {
+      m_loadBalancer->MarkSuccess(server);
       return;
     }
   }
@@ -97,7 +107,15 @@ void Clerk::Init(std::string configFileName) {
     // 2024-01-04 todo：bug fix
     auto* rpc = new raftServerRpcUtil(ip, port);
     m_servers.push_back(std::shared_ptr<raftServerRpcUtil>(rpc));
+    
+    // ==================== 新架构：创建RPC客户端接口 ====================
+    m_rpcClients.push_back(
+      std::make_unique<KvRpcClientAdapter>(std::shared_ptr<raftServerRpcUtil>(m_servers.back()))
+    );
   }
+  
+  // ==================== 新架构：创建负载均衡器 ====================
+  m_loadBalancer = std::make_unique<RoundRobinLoadBalancer>(m_servers.size(), 0);
 }
 
 Clerk::Clerk() : m_clientId(Uuid()), m_requestId(0), m_recentLeaderId(0) {}

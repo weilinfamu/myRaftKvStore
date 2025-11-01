@@ -21,6 +21,8 @@
 #include "kvServerRPC.pb.h"
 #include "raft.h"
 #include "skipList.h"
+#include "KvStateMachine.h"  // 新增：状态机抽象
+#include "SkipListStorageEngine.h"  // 新增：存储引擎抽象
 
 class KvServer : raftKVRpcProctoc::kvServerRpc {
  private:
@@ -30,7 +32,10 @@ class KvServer : raftKVRpcProctoc::kvServerRpc {
   std::shared_ptr<LockQueue<ApplyMsg> > applyChan;  // kvServer和raft节点的通信管道
   int m_maxRaftState;                               // snapshot if log grows this big
 
-  // Your definitions here.
+  // ==================== 新架构：使用状态机模式 ====================
+  std::shared_ptr<KvStateMachine> m_stateMachine;  // 状态机（业务逻辑）
+  
+  // ==================== 保留原有字段以兼容 ====================
   std::string m_serializedKVData;  // todo ： 序列化后的kv数据，理论上可以不用，但是目前没有找到特别好的替代方法
   SkipList<std::string, std::string> m_skipList;
   std::unordered_map<std::string, std::string> m_kvDB;

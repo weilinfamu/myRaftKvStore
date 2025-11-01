@@ -382,6 +382,12 @@ KvServer::KvServer(int me, int maxraftstate, std::string nodeInforFileName, shor
 
   applyChan = std::make_shared<LockQueue<ApplyMsg> >();
 
+  // ==================== 新架构：初始化状态机 ====================
+  // 创建存储引擎（使用SkipList）
+  auto storageEngine = std::make_unique<SkipListStorageEngine>(6);
+  // 创建状态机
+  m_stateMachine = std::make_shared<KvStateMachine>(std::move(storageEngine));
+  
   m_raftNode = std::make_shared<Raft>();
   ////////////////clerk层面 kvserver开启rpc接受功能
   //    同时raft与raft节点之间也要开启rpc功能，因此有两个注册

@@ -21,7 +21,7 @@
 #include "timer.hpp"  // IOManager 定时器支持
 using namespace std;
 
-// 连接状态枚举
+// 连接状态枚举 这是 C++11 引入的一种较新的枚举语法，称为"强类型枚举"或"枚举类"（enum class）。
 enum class ConnectionState {
   HEALTHY,      // 健康状态，连接正常工作
   PROBING,      // 探测状态，连接可能有问题，正在检测
