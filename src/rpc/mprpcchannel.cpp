@@ -144,6 +144,13 @@ void MprpcChannel::HandleSuccess() {
   ScheduleHeartbeat();
 }
 
+/*
+连接建立失败：无法建立到服务器的TCP连接
+发送请求失败：数据发送过程中遇到网络错误
+接收响应失败：接收数据过程中遇到网络错误
+解析响应失败：无法正确解析protobuf消息
+心跳检测失败：定期心跳探测不成功
+*/
 void MprpcChannel::HandleFailure() {
   ConnectionState current_state = m_state.load();
   int failure_count = m_failure_count.fetch_add(1) + 1;
@@ -151,6 +158,8 @@ void MprpcChannel::HandleFailure() {
   DPrintf("[MprpcChannel::HandleFailure] Connection to %s:%d failed (count: %d, state: %d)",
           m_ip.c_str(), m_port, failure_count, static_cast<int>(current_state));
   
+          
+  //状态降级：根据当前状态执行不同的降级策略
   if (current_state == ConnectionState::HEALTHY) {
     // 从 HEALTHY 切换到 PROBING
     m_state.store(ConnectionState::PROBING);

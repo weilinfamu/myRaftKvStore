@@ -52,17 +52,7 @@ bool isReleasePort(unsigned short usPort) {
   return true;
 }
 
-void DPrintf(const char *format, ...) {
-  if (Debug) {
-    // 获取当前的日期，然后取日志信息，写入相应的日志文件当中 a+
-    time_t now = time(nullptr);
-    tm *nowtm = localtime(&now);
-    va_list args;
-    va_start(args, format);
-    std::printf("[%d-%d-%d-%d-%d-%d] ", nowtm->tm_year + 1900, nowtm->tm_mon + 1, nowtm->tm_mday, nowtm->tm_hour,
-                nowtm->tm_min, nowtm->tm_sec);
-    std::vprintf(format, args);
-    std::printf("\n");
-    va_end(args);
-  }
-}
+// ==================== 旧的 DPrintf 实现已移除 ====================
+// 现在使用 spdlog，DPrintf 宏定义在 logger.h 中
+// DPrintf 会自动映射到 SPDLOG_DEBUG（Debug 模式）或空操作（Release 模式）
+// 不再需要在这里实现 DPrintf 函数

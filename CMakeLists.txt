@@ -7,6 +7,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # 生成debug版本，可以进行gdb调试
 set(CMAKE_BUILD_TYPE "Debug")
 
+# ==================== spdlog 依赖 ====================
+# 直接使用 FetchContent 下载 spdlog，避免系统版本冲突
+message(STATUS "📥 Downloading spdlog from GitHub...")
+include(FetchContent)
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG v1.12.0
+    GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(spdlog)
+
+# 将 spdlog 的头文件路径添加到全局include路径
+get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
+include_directories(${SPDLOG_INCLUDE_DIRS})
+message(STATUS "✅ spdlog configured, include dirs: ${SPDLOG_INCLUDE_DIRS}")
+# ==================== spdlog 配置结束 ====================
+
 # ==================== 压缩库检测 ====================
 # 尝试查找 LZ4 和 Zstd 压缩库
 # 如果找不到，会使用占位实现（性能较差但能编译通过）
@@ -70,7 +88,7 @@ add_subdirectory(src)
 add_subdirectory(example)
 
 add_library(skip_list_on_raft STATIC  ${src_rpc} ${src_fiber} ${rpc_example} ${raftsource} ${src_raftCore} ${src_raftRpcPro})
-target_link_libraries(skip_list_on_raft muduo_net muduo_base pthread dl ${COMPRESSION_LIBRARIES})
+target_link_libraries(skip_list_on_raft muduo_net muduo_base pthread dl ${COMPRESSION_LIBRARIES} spdlog::spdlog)
 # 添加格式化目标 start
 # from : https://blog.csdn.net/guotianqing/article/details/121661067
 
@@ -86,11 +104,11 @@ add_custom_target(format
 # 添加性能测试程序（如果文件存在）
 if(EXISTS ${PROJECT_SOURCE_DIR}/kv_raft_performance_test.cpp)
   add_executable(kv_raft_performance_test kv_raft_performance_test.cpp src/raftClerk/clerk.cpp src/raftClerk/raftServerRpcUtil.cpp src/common/util.cpp src/common/compressor.cpp)
-  target_link_libraries(kv_raft_performance_test skip_list_on_raft muduo_net muduo_base pthread dl boost_serialization protobuf ${COMPRESSION_LIBRARIES})
+  target_link_libraries(kv_raft_performance_test skip_list_on_raft muduo_net muduo_base pthread dl boost_serialization protobuf ${COMPRESSION_LIBRARIES} spdlog::spdlog)
 endif()
 
 # 协程压测客户端（如果文件存在）
 if(EXISTS ${PROJECT_SOURCE_DIR}/fiber_stress_test.cpp)
   add_executable(fiber_stress_test fiber_stress_test.cpp src/raftClerk/clerk.cpp src/raftClerk/raftServerRpcUtil.cpp src/common/util.cpp src/common/compressor.cpp)
-  target_link_libraries(fiber_stress_test skip_list_on_raft muduo_net muduo_base pthread dl boost_serialization protobuf ${COMPRESSION_LIBRARIES})
+  target_link_libraries(fiber_stress_test skip_list_on_raft muduo_net muduo_base pthread dl boost_serialization protobuf ${COMPRESSION_LIBRARIES} spdlog::spdlog)
 endif()

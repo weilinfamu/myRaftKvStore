@@ -8,10 +8,18 @@
 #include <unistd.h>
 #include <iostream>
 #include <random>
+#include "logger.h"  // 引入日志系统
 
 void ShowArgsHelp();
 
 int main(int argc, char **argv) {
+  // ==================== 初始化 spdlog ====================
+  // 创建 logs 目录（如果不存在）
+  system("mkdir -p logs");
+  
+  // 初始化日志系统（在解析参数后会根据节点号重新初始化）
+  Logger::Init("raft_init", "logs/raft_init.log", spdlog::level::debug);
+  LOG_INFO("Program started");
   //////////////////////////////////读取命令参数：节点数量、写入raft节点节点信息到哪个文件
   if (argc < 2) {
     ShowArgsHelp();

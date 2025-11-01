@@ -38,7 +38,11 @@ class DeferClass {
 #undef DEFER
 #define DEFER _MAKE_DEFER_(__LINE__)
 
-void DPrintf(const char* format, ...);
+// ==================== 日志系统（spdlog）====================
+#include "logger.h"
+// DPrintf 现在通过 logger.h 中的宏定义实现
+// 如果需要使用旧的 printf 风格日志，可以直接使用 DPrintf 宏
+// 推荐使用新的日志宏：LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR
 
 void myAssert(bool condition, std::string message = "Assertion failed!");
 
