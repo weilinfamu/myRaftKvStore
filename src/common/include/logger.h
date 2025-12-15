@@ -7,7 +7,8 @@
 #include <spdlog/async.h>
 #include <memory>
 #include <string>
-#include <iostream>  // 添加iostream
+#include <iostream>
+#include <vector>
 
 /**
  * @brief 日志管理器 - 基于 spdlog 的封装
@@ -119,4 +120,3 @@ public:
 #endif
 
 #endif  // LOGGER_H
-

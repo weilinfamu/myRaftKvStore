@@ -161,6 +161,9 @@ void MprpcChannel::HandleFailure() {
           
   //状态降级：根据当前状态执行不同的降级策略
   if (current_state == ConnectionState::HEALTHY) {
+
+    //首次失败仅降级到PROBING而非直接断开，体现了渐进式故障处理
+    //立即调度更频繁的心跳检测，积极尝试恢复，符合快速检测、慢速断开原则
     // 从 HEALTHY 切换到 PROBING
     m_state.store(ConnectionState::PROBING);
     DPrintf("[MprpcChannel] Connection to %s:%d entering PROBING state", m_ip.c_str(), m_port);
@@ -169,6 +172,7 @@ void MprpcChannel::HandleFailure() {
     ScheduleHeartbeat();
     
   } else if (current_state == ConnectionState::PROBING) {
+    
     // 已经在 PROBING 状态，检查是否达到失败阈值
     if (failure_count >= MAX_FAILURE_COUNT) {
       // 切换到 DISCONNECTED
@@ -184,6 +188,7 @@ void MprpcChannel::HandleFailure() {
         m_clientFd = -1;
       }
     } else {
+      //这个else分支对应的是："已处于PROBING状态但失败次数未达阈值"的情况
       // 继续探测
       ScheduleHeartbeat();
     }
@@ -215,6 +220,7 @@ void MprpcChannel::ScheduleHeartbeat() {
   std::weak_ptr<MprpcChannel> weak_self = shared_from_this();
   
   std::lock_guard<std::mutex> lock(m_timer_mutex);
+  
   m_heartbeat_timer = iom->addTimer(interval_ms, [weak_self]() {
     auto self = weak_self.lock();
     if (self) {
@@ -248,6 +254,11 @@ void MprpcChannel::CheckIdleConnection() {
   }
 }
 
+/*
+核心功能：通过低开销方式探测TCP连接是否依然存活
+实现策略：利用TCP协议特性，发送0字节数据包检测连接状态
+返回值意义：布尔值表示连接是否健康(true=连接存活，false=连接已断开)
+*/
 bool MprpcChannel::SendHeartbeat() {
   // 简单的心跳：发送一个很小的数据包并期望回应
   // 这里使用一个特殊的 0 字节发送来检测连接
